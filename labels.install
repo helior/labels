@@ -4,7 +4,7 @@
  * Implements hook_schema().
  */
 function labels_schema() {
-  return array(
+  $schema['labels'] = array(
     'description' => 'Labels and stuff.',
     'fields' => array(
       'machine_name' => array(
@@ -32,6 +32,8 @@ function labels_schema() {
       ),
     ),
     'export' => array(
+      'key name' => 'Machine Name',
+      'key' => 'machine_name',
       'admin_title' => 'label',
       'api' => array(
         'owner' => 'labels',
@@ -45,4 +47,6 @@ function labels_schema() {
       'machine_name' => array('machine_name'),
     ),
   );
+
+  return $schema;
 }
