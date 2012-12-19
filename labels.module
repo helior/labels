@@ -1,0 +1,10 @@
+<?php
+
+/**
+  * Implements hook_ctools_plugin_directory().
+  */
+ function labels_ctools_plugin_directory($module, $plugin) {
+   if ($module == 'ctools' && $plugin == 'export_ui') {
+     return "plugins/$plugin";
+   }
+ }

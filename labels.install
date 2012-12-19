@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function labels_schema() {
+  return array(
+    'description' => 'Labels and stuff.',
+    'fields' => array(
+      'machine_name' => array(
+        'description' => 'The machine-readable name of this item.',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'label' => array(
+        'description' => 'The human-readable name of this item.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'translatable' => TRUE,
+      ),
+      'plural' => array(
+        'description' => 'The plural version of the human-readable name of this item.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'translatable' => TRUE,
+      ),
+    ),
+    'export' => array(
+      'admin_title' => 'label',
+      'api' => array(
+        'owner' => 'labels',
+        'api' => 'labels',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'primary key' => array('machine_name'),
+    'unique keys' => array(
+      'machine_name' => array('machine_name'),
+    ),
+  );
+}

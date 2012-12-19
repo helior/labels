@@ -1,0 +1,5 @@
+name = Labels
+description = Provides labels.
+core = 7.x
+
+dependencies[] = ctools
