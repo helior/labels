@@ -8,3 +8,21 @@
      return "plugins/$plugin";
    }
  }
+
+/**
+ * Load a fully-loaded label object.
+ * @param $name
+ *   The machine-name of the label.
+ */
+function labels_load($name) {
+  ctools_include('export');
+  return ctools_export_crud_load('labels', $name);
+}
+
+/**
+ * Load all the things!
+ */
+function labels_load_all() {
+  ctools_include('export');
+  return ctools_export_crud_load_all('labels');
+}
