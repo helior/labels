@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * Implements hook_views_api().
+ */
+function labelfield_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'labelfield') . '/includes',
+  );
+}
+
+/**
+ * Implements hook_field_info().
+ */
+function labelfield_field_info() {
+  return array(
+    'labelfield' => array(
+      'label' => t('Label Reference'),
+      'description' => t('This field stores the machine-name of a label on the system.'),
+      'settings' => array(),
+      'instance_settings' => array(),
+      'default_widget' => 'options_select',
+      'default_formatter' => 'labelfield_default',
+    ),
+  );
+}
+
+/**
+ * Implements Implements hook_field_widget_info_alter().
+ */
+function labelfield_field_widget_info_alter(&$info) {
+  $info['options_select']['field types'][] = 'labelfield';
+  $info['options_buttons']['field types'][] = 'labelfield';
+}
+
+/**
+ * Implements hook_options_list().
+ */
+function labelfield_options_list($field, $instance, $entity_type, $entity)  {
+  $options = array();
+
+  foreach (labels_load_all() as $item) {
+    $options[$item->machine_name] = $item->label;
+  }
+
+  return $options;
+}
+
+/**
+ * @todo check if label exists.
+ * Implements hook_field_validate().
+ */
+function labelfield_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$errors) {}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function labelfield_field_is_empty($item, $field) {
+  return empty($item['label']);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function labelfield_field_formatter_info() {
+  return array(
+    'labelfield_default' => array(
+      'label' => t('Default'),
+      'field types' => array('labelfield'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function labelfield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'labelfield_default':
+      foreach ($items as $delta => $item) {
+        $label = labels_load($item['label']);
+        $element[$delta] = array('#markup' => $label->label);
+      }
+      break;
+  }
+
+  return $element;
+}

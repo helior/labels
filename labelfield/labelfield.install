@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Implements hook_field_schema().
+ */
+function labelfield_field_schema() {
+  return array(
+    'columns' => array(
+      'label' => array(
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+    ),
+    'indexes' => array(
+      'label' => array('label'),
+    ),
+    'foreign keys' => array(
+      'label_reference' => array(
+        'table' => 'labels',
+        'columns' => array('label' => 'machine_name'),
+      ),
+    ),
+  );
+}
