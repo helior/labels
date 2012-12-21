@@ -17,10 +17,10 @@ $plugin = array(
   'context name' => 'label',
   'convert list' => 'labels_context_label_convert_list',
   'convert' => 'labels_context_label_convert',
-  // 'placeholder form' => array(
-  //   '#type' => 'textfield',
-  //   '#description' => t('Enter the label for this context.'),
-  // ),
+  'placeholder form' => array(
+    '#type' => 'textfield',
+    '#description' => t('Enter the label for this context.'),
+  ),
 );
 
 /**
