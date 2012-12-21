@@ -3,4 +3,4 @@ description = Provides a field for entities to reference Labels.
 core = 7.x
 
 dependencies[] = labels
-dependencies[] = ctools
+dependencies[] = options
