@@ -24,9 +24,9 @@ function labels_views_api() {
  * @param $name
  *   The machine-name of the label.
  */
-function labels_load($name) {
+function labels_load($machine_name) {
   ctools_include('export');
-  return ctools_export_crud_load('labels', $name);
+  return ctools_export_crud_load('labels', $machine_name);
 }
 
 /**
