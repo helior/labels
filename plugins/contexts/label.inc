@@ -3,7 +3,7 @@
 /**
  * @file
  *
- * Plugin to provide a label context
+ * Plugin to provide a label context.
  */
 
 $plugin = array(
@@ -27,16 +27,30 @@ $plugin = array(
  * It's important to remember that $conf is optional here, because contexts
  * are not always created from the UI.
  */
-function labels_context_label_create($empty, $data = NULL, $conf = FALSE) {
+function labels_context_label_create($empty, $data = NULL, $conf = FALSE, $plugin) {
   $context = new ctools_context('label');
-  $context->plugin = 'label';
+  $context->plugin = $plugin['name'];
 
+  // Return an empty context.
   if ($empty) {
     return $context;
   }
 
-  if ($conf && isset($data['machine_name'])) {
+  // Attempt to load data from a configuration.
+  if ($conf && is_array($data) && isset($data['machine_name'])) {
+    $machine_name = $data['machine_name'];
     $data = labels_load($data['machine_name']);
+  }
+
+  // Label object was passed in, just derive the "argument".
+  elseif (is_object($data)) {
+    $machine_name = $data->machine_name;
+  }
+
+  // Assumably, a machine-name was provided.
+  elseif (is_scalar($data)) {
+    $machine_name = $data;
+    $data = labels_load($machine_name);
   }
 
   if (!empty($data)) {
