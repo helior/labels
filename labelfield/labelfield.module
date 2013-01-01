@@ -1,6 +1,15 @@
 <?php
 
 /**
+  * Implements hook_ctools_plugin_directory().
+  */
+ function labelfield_ctools_plugin_directory($module, $plugin) {
+   if ($module == 'ctools' && $plugin == 'relationships') {
+     return "plugins/$plugin";
+   }
+ }
+
+/**
  * Implements hook_views_api().
  */
 function labelfield_views_api() {

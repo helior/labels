@@ -2,5 +2,6 @@ name = Labelfield
 description = Provides a field for entities to reference Labels.
 core = 7.x
 
+dependencies[] = ctools
 dependencies[] = labels
 dependencies[] = options
