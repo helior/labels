@@ -36,3 +36,19 @@ function labels_load_all() {
   ctools_include('export');
   return ctools_export_crud_load_all('labels');
 }
+
+/**
+ * uasort callback for label sets.
+ */
+function labels_sets_sort($a, $b) {
+  switch (TRUE) {
+    case $a['weight'] < $b['weight']:
+      return -1;
+
+    case $a['weight'] > $b['weight']:
+      return 1;
+
+    default:
+      return 0;
+  }
+}
