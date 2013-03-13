@@ -15,8 +15,8 @@ function labels_token_info() {
     'description' => t('The machine name of the label.'),
   );
 
-  $label['label'] = array(
-    'name' => t('Label'),
+  $label['singular'] = array(
+    'name' => t('Singular'),
     'description' => t('The actual label string.'),
   );
 
@@ -47,8 +47,8 @@ function labels_tokens($type, $tokens, array $data = array(), array $options = a
           $replacements[$original] = $label->machine_name;
           break;
 
-        case 'label':
-          $replacements[$original] = $label->label;
+        case 'singular':
+          $replacements[$original] = $label->singular;
           break;
 
         case 'plural':

@@ -14,8 +14,8 @@ function labels_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'label' => array(
-        'description' => 'The human-readable name of this item.',
+      'singular' => array(
+        'description' => 'The singular version of the human-readable name of this item.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,

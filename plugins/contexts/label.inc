@@ -55,7 +55,7 @@ function labels_context_label_create($empty, $data = NULL, $conf = FALSE, $plugi
 
   if (!empty($data)) {
     $context->data     = $data;
-    $context->title    = $data->label;
+    $context->title    = $data->singular;
     $context->argument = $data->machine_name;
     return $context;
   }
@@ -66,7 +66,7 @@ function labels_context_label_settings_form($form, &$form_state) {
 
   $options = array();
   foreach (labels_load_all() as $label) {
-    $options[$label->machine_name] = $label->label;
+    $options[$label->machine_name] = $label->singular;
   }
 
   $form['machine_name'] = array(

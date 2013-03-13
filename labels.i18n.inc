@@ -19,7 +19,7 @@ function labels_i18n_object_info() {
       'type' => 'labels',
       'table' => 'labels',
       'properties' => array(
-        'label' => t('Label'),
+        'singular' => t('Singular'),
         'plural' => t('Plural'),
       ),
       'translate path' => 'admin/structure/labels/list/%ctools_export_ui/translate/%i18n_language',

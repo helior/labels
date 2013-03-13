@@ -21,7 +21,7 @@ function labels_content_types_label_settings($form, &$form_state) {
 
   $options = array();
   foreach (labels_load_all() as $label) {
-    $options[$label->machine_name] = $label->label;
+    $options[$label->machine_name] = $label->singular;
   }
 
   $form['machine_name'] = array(
@@ -60,14 +60,14 @@ function label_content_type_admin_info($subtype, $conf) {
   // Use plural value upon request.
   if ($conf['use_plural']) {
     if (empty($label->plural)) {
-      $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->label));
+      $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->singular));
     }
     else {
       $output = t('@label (plural)', array('@label' => $label->plural));
     }
   }
   else {
-    $output = $label->label;
+    $output = $label->singular;
   }
 
   $element = new stdClass();
@@ -89,7 +89,7 @@ function labels_content_types_label_render($subtype, $conf, $args, $context) {
   $label = labels_load($conf['machine_name']);
   $element = new stdClass();
   $element->module = 'labels';
-  $element->content = $conf['use_plural'] ? $label->plural : $label->label;
+  $element->content = $conf['use_plural'] ? $label->plural : $label->singular;
 
   return $element;
 }

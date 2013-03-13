@@ -36,10 +36,10 @@ function labels_views_data() {
     ),
   );
 
-  // Expose the label value.
-  $data['labels']['label'] = array(
-    'title' => t('Label'),
-    'help' => t('The label.'),
+  // Expose the singular value.
+  $data['labels']['singular'] = array(
+    'title' => t('Singular'),
+    'help' => t('The sungular version of the label.'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
