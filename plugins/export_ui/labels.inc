@@ -4,6 +4,7 @@
  * Export UI plugin for labels.
  */
 $plugin = array(
+  'title' => t('Labels'),
   'schema' => 'labels',
   'access' => 'administer labels',
   'handler' => array(
