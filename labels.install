@@ -34,7 +34,7 @@ function labels_schema() {
     'export' => array(
       'key name' => 'Machine Name',
       'key' => 'machine_name',
-      'admin_title' => 'label',
+      'admin_title' => 'singular',
       'api' => array(
         'owner' => 'labels',
         'api' => 'labels',
