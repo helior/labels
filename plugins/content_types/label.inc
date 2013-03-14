@@ -25,7 +25,7 @@ function labels_content_types_label_settings($form, &$form_state) {
   }
 
   $form['machine_name'] = array(
-    '#type' => 'radios',
+    '#type' => 'select',
     '#title' => t('Label'),
     '#options' => $options,
     '#required' => TRUE,

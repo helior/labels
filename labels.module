@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * @todo  Can gettext find our i18n_strings?
+ */
+
+/**
   * Implements hook_ctools_plugin_directory().
   */
  function labels_ctools_plugin_directory($module, $plugin) {
@@ -20,21 +24,36 @@ function labels_views_api() {
 }
 
 /**
- * Load a fully-loaded label object.
+ * Load a fully-loaded label object. Translated, if possible.
+ *
  * @param $name
  *   The machine-name of the label.
  */
 function labels_load($machine_name) {
   ctools_include('export');
-  return ctools_export_crud_load('labels', $machine_name);
+  $object = ctools_export_crud_load('labels', $machine_name);
+
+  if (labels_translatable()) {
+    $object = labels_object_translate($object);
+  }
+
+  return $object;
 }
 
 /**
- * Load all the things!
+ * Load all the things! Translated, if possible.
  */
 function labels_load_all() {
   ctools_include('export');
-  return ctools_export_crud_load_all('labels');
+  $objects = ctools_export_crud_load_all('labels');
+
+  if (labels_translatable()) {
+    foreach ($objects as &$object) {
+      $object = labels_object_translate($object);
+    }
+  }
+
+  return $objects;
 }
 
 /**
@@ -51,4 +70,19 @@ function labels_sets_sort($a, $b) {
     default:
       return 0;
   }
+}
+
+/**
+ * Helper to determine if internationalization is appropriate.
+ */
+function labels_translatable() {
+  return drupal_multilingual() && module_exists('i18n_string');
+}
+
+/**
+ * Helper for translating entire label object. Powered by i18n_string. This
+ * should be used wrapped by labels_translatable()
+ */
+function labels_object_translate($object) {
+  return i18n_string_object_translate('labels', $object);
 }
