@@ -51,3 +51,29 @@ function labels_schema() {
 
   return $schema;
 }
+
+/**
+ * Change the property name of the main label string to singular.
+ */
+function labels_update_7001() {
+  $spec = array(
+    'description' => 'The singular version of the human-readable name of this item.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'translatable' => TRUE,
+  );
+
+  db_change_field('labels', 'label', 'singular', $spec);
+
+  return t('The labels table has been properly updated.');
+}
+
+/**
+ * Change the name of the labels table to its singular variation.
+ */
+function labels_update_7002() {
+  db_rename_table('labels', 'label');
+  return t('The labels table has been renamed to label.');
+}
