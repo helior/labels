@@ -55,23 +55,28 @@ function labels_content_types_label_settings_submit($form, &$form_state) {
  * Admin info callback.
  */
 function label_content_type_admin_info($subtype, $conf) {
-  $label = labels_load($conf['machine_name']);
+  $element = new stdClass();
 
-  // Use plural value upon request.
-  if ($conf['use_plural']) {
-    if (empty($label->plural)) {
-      $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->singular));
+  if ($label = labels_load($conf['machine_name'])) {
+    // Use plural value upon request.
+    if ($conf['use_plural']) {
+      if (empty($label->plural)) {
+        $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->singular));
+      }
+      else {
+        $output = t('@label (plural)', array('@label' => $label->plural));
+      }
     }
     else {
-      $output = t('@label (plural)', array('@label' => $label->plural));
+      $output = $label->singular;
     }
-  }
-  else {
-    $output = $label->singular;
+
+    $element->title = $output;
   }
 
-  $element = new stdClass();
-  $element->title = $output;
+  else {
+    $element->title = t('Missing label :(');
+  }
 
   return $element;
 }
