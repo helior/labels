@@ -88,7 +88,7 @@ function labels_object_translate($object) {
  * Ctools exportables callback.
  */
 function labels_ctools_export_object($object, $indent) {
-  $table = 'labels';
+  $table = 'label';
   $schema = ctools_export_get_schema($table);
   $strings = array();
 
