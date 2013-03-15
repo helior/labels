@@ -31,13 +31,14 @@ function labels_views_api() {
  */
 function labels_load($machine_name) {
   ctools_include('export');
-  $object = ctools_export_crud_load('labels', $machine_name);
 
-  if (labels_translatable()) {
-    $object = labels_object_translate($object);
+  if ($object = ctools_export_crud_load('labels', $machine_name)) {
+    if (labels_translatable()) {
+      $object = labels_object_translate($object);
+    }
+
+    return $object;
   }
-
-  return $object;
 }
 
 /**
