@@ -1,10 +1,6 @@
 <?php
 
 /**
- * @todo  Can gettext find our i18n_strings?
- */
-
-/**
   * Implements hook_ctools_plugin_directory().
   */
  function labels_ctools_plugin_directory($module, $plugin) {
@@ -32,7 +28,7 @@ function labels_views_api() {
 function labels_load($machine_name) {
   ctools_include('export');
 
-  if ($object = ctools_export_crud_load('labels', $machine_name)) {
+  if ($object = ctools_export_crud_load('label', $machine_name)) {
     if (labels_translatable()) {
       $object = labels_object_translate($object);
     }
@@ -46,7 +42,7 @@ function labels_load($machine_name) {
  */
 function labels_load_all() {
   ctools_include('export');
-  $objects = ctools_export_crud_load_all('labels');
+  $objects = ctools_export_crud_load_all('label');
 
   if (labels_translatable()) {
     foreach ($objects as &$object) {
@@ -85,7 +81,7 @@ function labels_translatable() {
  * should be used wrapped by labels_translatable()
  */
 function labels_object_translate($object) {
-  return i18n_string_object_translate('labels', $object);
+  return i18n_string_object_translate('label', $object);
 }
 
 /**

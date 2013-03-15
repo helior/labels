@@ -5,7 +5,7 @@
  */
 $plugin = array(
   'title' => t('Labels'),
-  'schema' => 'labels',
+  'schema' => 'label',
   'access' => 'administer labels',
   'handler' => array(
     'class' => 'labels_export_ui',

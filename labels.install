@@ -4,8 +4,8 @@
  * Implements hook_schema().
  */
 function labels_schema() {
-  $schema['labels'] = array(
-    'description' => 'Labels and stuff.',
+  $schema['label'] = array(
+    'description' => 'A Label, in both singular and plural forms.',
     'fields' => array(
       'machine_name' => array(
         'description' => 'The machine-readable name of this item.',
@@ -38,7 +38,7 @@ function labels_schema() {
       'export callback' => 'labels_ctools_export_object',
       'api' => array(
         'owner' => 'labels',
-        'api' => 'labels',
+        'api' => 'label',
         'minimum_version' => 1,
         'current_version' => 1,
       ),

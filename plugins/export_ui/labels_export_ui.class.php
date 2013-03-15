@@ -25,7 +25,7 @@ class labels_export_ui extends ctools_export_ui {
     parent::edit_form_submit($form, $form_state);
 
     if (labels_translatable()) {
-      i18n_string_object_update('labels', $form_state['item']);
+      i18n_string_object_update('label', $form_state['item']);
     }
   }
 
@@ -34,7 +34,7 @@ class labels_export_ui extends ctools_export_ui {
   function delete_form_submit(&$form_state) {
     parent::delete_form_submit($form_state);
     if (labels_translatable() && $form_state['op'] == 'delete') {
-      i18n_string_object_remove('labels', $form_state['item']);
+      i18n_string_object_remove('label', $form_state['item']);
     }
   }
 }

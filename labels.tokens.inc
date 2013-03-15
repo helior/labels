@@ -5,7 +5,7 @@
  */
 function labels_token_info() {
   $types['label'] = array(
-    'name' => t('Labels'),
+    'name' => t('Label'),
     'description' => t('Tokens related to labels.'),
     'needs-data' => 'label',
   );

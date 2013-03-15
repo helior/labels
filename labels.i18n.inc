@@ -4,8 +4,8 @@
  * Implements hook_i18n_object_info().
  */
 function labels_i18n_object_info() {
-  $info['labels'] = array(
-    'title' => t('Labels'),
+  $info['label'] = array(
+    'title' => t('Label'),
     'key' => 'machine_name',
     'load callback' => 'labels_load',
     'placeholders' => array(
@@ -15,9 +15,9 @@ function labels_i18n_object_info() {
     'translate tab' => 'admin/structure/labels/list/%ctools_export_ui/translate',
     'list callback' => 'labels_load_all',
     'string translation' => array(
-      'textgroup' => 'labels',
-      'type' => 'labels',
-      'table' => 'labels',
+      'textgroup' => 'label',
+      'type' => 'label',
+      'table' => 'label',
       'properties' => array(
         'singular' => t('Singular'),
         'plural' => t('Plural'),
@@ -34,8 +34,8 @@ function labels_i18n_object_info() {
  * Implements hook_i18n_string_info().
  */
 function labels_i18n_string_info() {
-  $groups['labels'] = array(
-    'title' => t('Labels'),
+  $groups['label'] = array(
+    'title' => t('Label'),
     'description' => t('Translatable labels.'),
     'format' => FALSE,
     'list' => TRUE,
