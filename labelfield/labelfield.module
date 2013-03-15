@@ -50,7 +50,7 @@ function labelfield_options_list($field, $instance, $entity_type, $entity)  {
   $options = array();
 
   foreach (labels_load_all() as $item) {
-    $options[$item->machine_name] = $item->label;
+    $options[$item->machine_name] = $item->singular;
   }
 
   return $options;
@@ -91,7 +91,7 @@ function labelfield_field_formatter_view($entity_type, $entity, $field, $instanc
     case 'labelfield_default':
       foreach ($items as $delta => $item) {
         $label = labels_load($item['label']);
-        $element[$delta] = array('#markup' => $label->label);
+        $element[$delta] = array('#markup' => $label->singular);
       }
       break;
   }

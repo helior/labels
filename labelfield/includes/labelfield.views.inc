@@ -10,7 +10,7 @@ function labelfield_field_views_data($field) {
     // Add the relationship only on the label field.
     $data[$table_name][$field['field_name'] . '_label']['relationship'] = array(
       'handler' => 'views_handler_relationship',
-      'base' => 'labels',
+      'base' => 'label',
       'base field' => 'machine_name',
       'label' => t('Label from !field_name', array('!field_name' => $field['field_name'])),
     );

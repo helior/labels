@@ -21,11 +21,11 @@ function labels_content_types_label_settings($form, &$form_state) {
 
   $options = array();
   foreach (labels_load_all() as $label) {
-    $options[$label->machine_name] = $label->label;
+    $options[$label->machine_name] = $label->singular;
   }
 
   $form['machine_name'] = array(
-    '#type' => 'radios',
+    '#type' => 'select',
     '#title' => t('Label'),
     '#options' => $options,
     '#required' => TRUE,
@@ -55,23 +55,28 @@ function labels_content_types_label_settings_submit($form, &$form_state) {
  * Admin info callback.
  */
 function label_content_type_admin_info($subtype, $conf) {
-  $label = labels_load($conf['machine_name']);
+  $element = new stdClass();
 
-  // Use plural value upon request.
-  if ($conf['use_plural']) {
-    if (empty($label->plural)) {
-      $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->label));
+  if ($label = labels_load($conf['machine_name'])) {
+    // Use plural value upon request.
+    if ($conf['use_plural']) {
+      if (empty($label->plural)) {
+        $output = t("Warning: plural value for %label doesn't exist!", array('%label' => $label->singular));
+      }
+      else {
+        $output = t('@label (plural)', array('@label' => $label->plural));
+      }
     }
     else {
-      $output = t('@label (plural)', array('@label' => $label->plural));
+      $output = $label->singular;
     }
-  }
-  else {
-    $output = $label->label;
+
+    $element->title = $output;
   }
 
-  $element = new stdClass();
-  $element->title = $output;
+  else {
+    $element->title = t('Missing label :(');
+  }
 
   return $element;
 }
@@ -89,7 +94,7 @@ function labels_content_types_label_render($subtype, $conf, $args, $context) {
   $label = labels_load($conf['machine_name']);
   $element = new stdClass();
   $element->module = 'labels';
-  $element->content = $conf['use_plural'] ? $label->plural : $label->label;
+  $element->content = $conf['use_plural'] ? $label->plural : $label->singular;
 
   return $element;
 }

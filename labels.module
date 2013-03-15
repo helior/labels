@@ -20,21 +20,37 @@ function labels_views_api() {
 }
 
 /**
- * Load a fully-loaded label object.
+ * Load a fully-loaded label object. Translated, if possible.
+ *
  * @param $name
  *   The machine-name of the label.
  */
 function labels_load($machine_name) {
   ctools_include('export');
-  return ctools_export_crud_load('labels', $machine_name);
+
+  if ($object = ctools_export_crud_load('label', $machine_name)) {
+    if (labels_translatable()) {
+      $object = labels_object_translate($object);
+    }
+
+    return $object;
+  }
 }
 
 /**
- * Load all the things!
+ * Load all the things! Translated, if possible.
  */
 function labels_load_all() {
   ctools_include('export');
-  return ctools_export_crud_load_all('labels');
+  $objects = ctools_export_crud_load_all('label');
+
+  if (labels_translatable()) {
+    foreach ($objects as &$object) {
+      $object = labels_object_translate($object);
+    }
+  }
+
+  return $objects;
 }
 
 /**
@@ -51,4 +67,44 @@ function labels_sets_sort($a, $b) {
     default:
       return 0;
   }
+}
+
+/**
+ * Helper to determine if internationalization is appropriate.
+ */
+function labels_translatable() {
+  return drupal_multilingual() && module_exists('i18n_string');
+}
+
+/**
+ * Helper for translating entire label object. Powered by i18n_string. This
+ * should be used wrapped by labels_translatable()
+ */
+function labels_object_translate($object) {
+  return i18n_string_object_translate('label', $object);
+}
+
+/**
+ * Ctools exportables callback.
+ */
+function labels_ctools_export_object($object, $indent) {
+  $table = 'label';
+  $schema = ctools_export_get_schema($table);
+  $strings = array();
+
+  // Traverse over the schema to discover the translatable property values.
+  foreach ($schema['fields'] as $key => $field) {
+    if (isset($field['translatable']) && $field['translatable'] == TRUE) {
+      if (!empty($object->{$key})) {
+        $strings[] = "t('" . $object->$key . "')";
+      }
+    }
+  }
+
+  $output = ctools_export_object($table, $object, $indent);
+
+  $strings = implode(', ', $strings);
+  $output .= $indent . "\$translatables['" . $object->machine_name . "'] = array(" . $strings . ");\n";
+
+  return $output;
 }

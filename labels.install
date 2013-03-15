@@ -4,8 +4,8 @@
  * Implements hook_schema().
  */
 function labels_schema() {
-  $schema['labels'] = array(
-    'description' => 'Labels and stuff.',
+  $schema['label'] = array(
+    'description' => 'A Label, in both singular and plural forms.',
     'fields' => array(
       'machine_name' => array(
         'description' => 'The machine-readable name of this item.',
@@ -14,8 +14,8 @@ function labels_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'label' => array(
-        'description' => 'The human-readable name of this item.',
+      'singular' => array(
+        'description' => 'The singular version of the human-readable name of this item.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -34,10 +34,11 @@ function labels_schema() {
     'export' => array(
       'key name' => 'Machine Name',
       'key' => 'machine_name',
-      'admin_title' => 'label',
+      'admin_title' => 'singular',
+      'export callback' => 'labels_ctools_export_object',
       'api' => array(
         'owner' => 'labels',
-        'api' => 'labels',
+        'api' => 'label',
         'minimum_version' => 1,
         'current_version' => 1,
       ),
@@ -49,4 +50,30 @@ function labels_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Change the property name of the main label string to singular.
+ */
+function labels_update_7001() {
+  $spec = array(
+    'description' => 'The singular version of the human-readable name of this item.',
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => TRUE,
+    'default' => '',
+    'translatable' => TRUE,
+  );
+
+  db_change_field('labels', 'label', 'singular', $spec);
+
+  return t('The labels table has been properly updated.');
+}
+
+/**
+ * Change the name of the labels table to its singular variation.
+ */
+function labels_update_7002() {
+  db_rename_table('labels', 'label');
+  return t('The labels table has been renamed to label.');
 }
