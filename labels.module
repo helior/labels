@@ -87,3 +87,28 @@ function labels_translatable() {
 function labels_object_translate($object) {
   return i18n_string_object_translate('labels', $object);
 }
+
+/**
+ * Ctools exportables callback.
+ */
+function labels_ctools_export_object($object, $indent) {
+  $table = 'labels';
+  $schema = ctools_export_get_schema($table);
+  $strings = array();
+
+  // Traverse over the schema to discover the translatable property values.
+  foreach ($schema['fields'] as $key => $field) {
+    if (isset($field['translatable']) && $field['translatable'] == TRUE) {
+      if (!empty($object->{$key})) {
+        $strings[] = "t('" . $object->$key . "')";
+      }
+    }
+  }
+
+  $output = ctools_export_object($table, $object, $indent);
+
+  $strings = implode(', ', $strings);
+  $output .= $indent . "\$translatables['" . $object->machine_name . "'] = array(" . $strings . ");\n";
+
+  return $output;
+}

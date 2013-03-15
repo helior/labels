@@ -35,6 +35,7 @@ function labels_schema() {
       'key name' => 'Machine Name',
       'key' => 'machine_name',
       'admin_title' => 'singular',
+      'export callback' => 'labels_ctools_export_object',
       'api' => array(
         'owner' => 'labels',
         'api' => 'labels',
