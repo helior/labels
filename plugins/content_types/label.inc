@@ -92,9 +92,12 @@ function labels_content_types_label_render($subtype, $conf, $args, $context) {
   }
 
   $label = labels_load($conf['machine_name']);
+  $value = $conf['use_plural'] ? $label->plural : $label->singular;
+
   $element = new stdClass();
+  $element->title = $value;
   $element->module = 'labels';
-  $element->content = $conf['use_plural'] ? $label->plural : $label->singular;
+  $element->content = $value;
 
   return $element;
 }
